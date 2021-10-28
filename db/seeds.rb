@@ -10,12 +10,13 @@ require 'faker'
 
 User.destroy_all
 City.destroy_all
+Gossip.destroy_all
 
 10.times do
   user = User.create(
     first_name: Faker::Name.first_name,
     last_name: Faker::Name.last_name,
-    description: Faker::Lorem.sentence(word_count: 40, supplemental: true),
+    description: Faker::Lorem.sentence(word_count: 40),
     email: Faker::Internet.email,
     age: rand(18..120)
     )
@@ -32,4 +33,13 @@ end
 
 User.all.each do |user|
   user.update(city: City.all[rand(0..City.all.length)-1])
+end
+
+20.times do
+  gossip = Gossip.create(
+    title: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 3),
+    content: Faker::Lorem.sentence(word_count: 88),
+    user: User.all[rand(0..User.all.length-1)]
+  )
+  puts gossip
 end
