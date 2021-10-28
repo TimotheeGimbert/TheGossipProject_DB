@@ -8,6 +8,9 @@
 
 require 'faker'
 
+User.destroy_all
+City.destroy_all
+
 10.times do
   user = User.create(
     first_name: Faker::Name.first_name,
@@ -17,4 +20,16 @@ require 'faker'
     age: rand(18..120)
     )
     puts user
+end
+
+10.times do
+  city = City.create(
+    name: Faker::Name.first_name + 'ville',
+    zip_code: Faker::Number.within(range: 10000..77000).to_s
+  )
+  puts city
+end
+
+User.all.each do |user|
+  user.update(city: City.all[rand(0..City.all.length)-1])
 end
