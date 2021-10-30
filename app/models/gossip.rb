@@ -1,5 +1,5 @@
 class Gossip < ApplicationRecord
   belongs_to :user
-  has_many :categories
-  has_many :tags, through: :categories
+  belongs_to :category
+  has_many :tags, through: :category
 end

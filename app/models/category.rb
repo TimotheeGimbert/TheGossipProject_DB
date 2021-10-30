@@ -1,4 +1,4 @@
 class Category < ApplicationRecord
-  belongs_to :tag
-  belongs_to :gossip
+  has_many :gossips
+  has_many :tags
 end

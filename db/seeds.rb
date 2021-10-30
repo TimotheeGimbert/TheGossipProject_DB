@@ -14,18 +14,7 @@ Gossip.destroy_all
 Tag.destroy_all
 Category.destroy_all
 
-
-10.times do
-  user = User.create(
-    first_name: Faker::Name.first_name,
-    last_name: Faker::Name.last_name,
-    description: Faker::Lorem.sentence(word_count: 40),
-    email: Faker::Internet.email,
-    age: rand(18..120)
-    )
-    puts user
-end
-
+# Create cities with zip_codes
 10.times do
   city = City.create(
     name: Faker::Name.first_name + 'ville',
@@ -34,24 +23,37 @@ end
   puts city
 end
 
-User.all.each do |user|
-  user.update(city: City.all[rand(0..City.all.length)-1])
+# Create users
+10.times do
+  user = User.create(
+    first_name: Faker::Name.first_name,
+    last_name: Faker::Name.last_name,
+    description: Faker::Lorem.sentence(word_count: 40),
+    email: Faker::Internet.email,
+    age: rand(18..120),
+    city: City.all[rand(0..City.all.length)-1]
+    )
+    puts user
 end
 
+
 funny = Category.create
+weird = Category.create
 
 20.times do
   gossip = Gossip.create(
     title: Faker::Lorem.sentence(word_count: 6, supplemental: true, random_words_to_add: 3),
     content: Faker::Lorem.sentence(word_count: 88),
-    user: User.all[rand(0..User.all.length-1)]
+    user: User.all[rand(0..User.all.length-1)],
+    category: [funny, weird][rand(0..1)]
   )
   puts gossip
 end
 
 10.times do
   tag = Tag.create(
-    title: 'tHemE ' + Faker::Lorem.sentence(word_count: 1)
+    name: 'tag ' + Faker::Lorem.sentence(word_count: 1),
+    category: [funny, weird][rand(0..1)]
   )
   puts tag
 end
